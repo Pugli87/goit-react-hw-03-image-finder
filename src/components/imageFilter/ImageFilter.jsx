@@ -6,6 +6,7 @@ import ImageGalleryItem from './imageGalleryItem/ImageGalleryItem';
 import Button from './button/Button';
 import Loader from './loader/Loader';
 import Modal from './modal/Modal';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const API_KEY = '37119471-67d3015a83a24c7694e1d7310';
 const IMAGES_PER_PAGE = 12;
@@ -26,6 +27,7 @@ export default class ImageFilter extends Component {
       const response = await axios.get(
         `https://pixabay.com/api/?q=${searchQuery}&page=1&key=${API_KEY}&image_type=photo&orientation=horizontal&per_page=${IMAGES_PER_PAGE}`
       );
+      Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
       this.setState({ images: response.data.hits, currentPage: 1 }); // Reseteamos la página actual a 1
     } catch (error) {
       console.error('Error fetching images:', error);
